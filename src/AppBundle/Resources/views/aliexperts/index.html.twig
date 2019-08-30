@@ -1,0 +1,29 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+
+
+{% block body %}
+
+  <div class="content p-4">
+    <h2 class="mb-4">Get epn ref link</h2>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <form action="{{ path('aliexperts_epn_get_url') }}" method="post">
+          <div class="form-group">
+          <input class="form-control form-control-lg" name="url" type="text" placeholder="product url">
+          </div>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary btn-lg text-center">Get link</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}
+

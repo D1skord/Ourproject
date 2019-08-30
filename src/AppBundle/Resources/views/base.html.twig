@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>{% block title %}OurProject{% endblock %}</title>
+
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+  {% block stylesheets %}
+    {% stylesheets '@css_app' output='cs/app-css.css' %}
+      <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+  {% endblock %}
+</head>
+<body class="bg-light">
+
+
+<nav class="navbar navbar-expand navbar-dark bg-secondary">
+  <a class="sidebar-toggle mr-3" href="#"><i class="fa fa-bars"></i></a>
+  <a class="navbar-brand" href="#">OurProject</a>
+
+  <div class="navbar-collapse collapse">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item text-white">Admin</li>
+    </ul>
+  </div>
+</nav>
+
+<div class="d-flex">
+  <div class="sidebar sidebar-dark bg-dark">
+    <ul class="list-unstyled">
+      <li>
+        <a href="#sm_expand_1" data-toggle="collapse">
+          <i class="fab fa-vk"></i> AliExperts
+        </a>
+        <ul id="sm_expand_1" class="list-unstyled collapse">
+          <li><a href="{{ path('aliexperts_epn') }}">
+              <i class="fas fa-link"></i> Get EPN link
+            </a></li>
+          <li><a href="{{ path('aliexperts_add_post') }}">
+              <i class="fas fa-newspaper"></i> Add post
+            </a></li>
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+
+
+  {% block body %}{% endblock %}
+
+</div>
+
+{% block javascript %}
+{% javascripts '@js_app' output='js/app-script.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
+
+</body>
+
+
+</html>
