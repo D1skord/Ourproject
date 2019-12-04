@@ -318,6 +318,51 @@ class vk{
 
     }
 
+    public function upload_doc_well($gid = false, $file){
+
+        if(!is_string($file)) return false;
+        if(!function_exists('curl_init')) return false;
+
+        $data_json = $this->api('docs.getWallUploadServer', ['group_id'=> intval($gid)]);
+
+        if(!isset($data_json['upload_url'])) return false;
+
+        $attachment = false;
+
+        $path = realpath($file);
+
+        if(!$path) return false;
+
+        $files['file'] = (class_exists('CURLFile', false)) ? new CURLFile($file) : '@' . $file;
+
+        $upload_url = $data_json['upload_url'];
+
+        $ch = curl_init($upload_url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-type: multipart/form-data' ));
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible;)');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $files);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+
+        $upload_data = json_decode(curl_exec($ch), true);
+
+        $response = $this->api('docs.save', $upload_data);
+
+        if(count($response) > 0){
+
+            foreach($response as $photo){
+
+                $attachment = 'doc'.$photo['owner_id'].'_'.$photo['id'];
+            }
+
+        }
+
+        return $attachment;
+
+    }
+
     /**
      *
      * Заливка видео

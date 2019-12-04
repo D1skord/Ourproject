@@ -8,6 +8,7 @@ imports:
 parameters:
     locale: en
     downlaods_directory: '%kernel.project_dir%/web/uploads'
+    bin_directory: '%kernel.project_dir%/bin'
 
 framework:
     #esi: ~
@@ -76,48 +77,46 @@ sensio_framework_extra:
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
     assets:
-        font_awesome_brands_400_eot:
-            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.eot'
-            output: 'webfonts/fa-brands-400.eot'
-        font_awesome_brands_400_svg:
-            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.svg'
-            output: 'webfonts/fa-brands-400.svg'
-        font_awesome_brands_400_ttf:
-            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.ttf'
-            output: 'webfonts/fa-brands-400.ttf'
-        font_awesome_brands_400_woff:
-            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.woff'
-            output: 'webfonts/fa-brands-400.woff'
-        font_awesome_brands_400_woff2:
-            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.woff2'
-            output: 'webfonts/fa-brands-400.woff2'
-        font_awesome_regular_400_eot:
-            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.eot'
-            output: 'webfonts/fa-brands-400.eot'
-        font_awesome_regular_400_svg:
-            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.svg'
-            output: 'webfonts/fa-brands-400.svg'
-        font_awesome_regular_400_ttf:
-            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.ttf'
-            output: 'webfonts/fa-brands-400.ttf'
-        font_awesome_regular_400_woff:
-            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.woff'
-            output: 'webfonts/fa-brands-400.woff'
-        font_awesome_regular_400_woff2:
-            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.woff2'
-            output: 'webfonts/fa-brands-400.woff2'
-        font_awesome_eot:
-            inputs: '@AppBundle/Resources/public/fonts/fa-solid-900.eot'
-            output: 'webfonts/fa-solid-900.eot'
-        font_awesome_woff2:
-            inputs: '@AppBundle/Resources/public/fonts/fa-solid-900.woff2'
-            output: 'webfonts/fa-solid-900.woff2'
-        font_awesome_woff:
-            inputs: '@AppBundle/Resources/public/fonts/fa-solid-900.woff'
-            output: 'webfonts/fa-solid-900.woff'
+#        font_awesome_brands_400_eot:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.eot'
+#            output: 'webfonts/fa-brands-400.eot'
+#        font_awesome_brands_400_svg:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.svg'
+#            output: 'webfonts/fa-brands-400.svg'
+#        font_awesome_brands_400_ttf:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.ttf'
+#            output: 'webfonts/fa-brands-400.ttf'
+#        font_awesome_brands_400_woff:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.woff'
+#            output: 'webfonts/fa-brands-400.woff'
+#        font_awesome_brands_400_woff2:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-brands-400.woff2'
+#            output: 'webfonts/fa-brands-400.woff2'
+#        font_awesome_regular_400_eot:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.eot'
+#            output: 'webfonts/fa-regular-400.eot'
+#        font_awesome_regular_400_svg:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.svg'
+#            output: 'webfonts/fa-regular-400.svg'
+#        font_awesome_regular_400_ttf:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.ttf'
+#            output: 'webfonts/fa-regular-400.ttf'
+#        font_awesome_regular_400_woff:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.woff'
+#            output: 'webfonts/fa-regular-400.woff'
+#        font_awesome_regular_400_woff2:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-regular-400.woff2'
+#            output: 'webfonts/fa-regular-400.woff2'
+#        font_awesome_eot:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-solid-900.eot'
+#            output: 'webfonts/fa-solid-900.eot'
+#        font_awesome_woff2:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-solid-900.woff2'
+#            output: 'webfonts/fa-solid-900.woff2'
+#        font_awesome_woff:
+#            inputs: '@AppBundle/Resources/public/fonts/fa-solid-900.woff'
+#            output: 'webfonts/fa-solid-900.woff'
         css_app:
             inputs:
                 - '@AppBundle/Resources/public/css/bootstrap/*'

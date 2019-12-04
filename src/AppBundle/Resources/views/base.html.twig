@@ -6,7 +6,7 @@
 
   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
   {% block stylesheets %}
-    {% stylesheets '@css_app' output='cs/app-css.css' %}
+    {% stylesheets '@css_app'  output='css/app-css.css' %}
       <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
   {% endblock %}
@@ -46,7 +46,31 @@
   </div>
 
 
-  {% block body %}{% endblock %}
+  <div class="content-wrapper w-100">
+    {% for flashMessage in app.session.flashbag.get('success') %}
+      <div class="alert alert-success" role="alert">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('info') %}
+      <div class="alert alert-info" role="alert">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('warning') %}
+      <div class="alert alert-warning" role="alert">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('danger') %}
+      <div class="alert alert-danger" role="alert">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+    {% block body %}{% endblock %}
+  </div>
+
+
 
 </div>
 
