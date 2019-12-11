@@ -14,6 +14,7 @@ use AppBundle\Model\clEPNAPIAccess;
 use GuzzleHttp\Psr7\Stream;
 use Antalaron\VideoGif\VideoGif;
 
+
 class AliexpertsController extends Controller
 {
     /**
@@ -32,6 +33,7 @@ class AliexpertsController extends Controller
      */
     public function epnAction(Request $request)
     {
+
 
 
         // replace this example code with whatever you need
@@ -101,15 +103,22 @@ class AliexpertsController extends Controller
             /* Get video */
             $productUrlMob = str_replace('//ru', '//m.ru', $request->request->get('url'));
 
+
             $client = new Client();
-            $res = $client->request('GET', $productUrlMob, []);
+            $res = $client->request('GET', $productUrlMob, [
+                'headers' => [
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+                ]
+            ]);
 
             $productHtmlMob = $res->getBody()->getContents();
 
+
             preg_match('/(<source src=")+(\S*mp4)/', $productHtmlMob, $res);
 
-            $productUrlVideo = $res[2];
 
+            $productUrlVideo = (!empty($res[2])) ? $res[2] : false;
+            $gifPatch = '';
             if (!empty($productUrlVideo)) {
 
 
@@ -248,6 +257,7 @@ class AliexpertsController extends Controller
 
             $attachments = (!empty($gifPatch)) ? $vk->upload_doc_well(185235787, $gifPatch) : implode(',',$vk->upload_photo(185235787, $imagesPaths));
 
+    
             try {
                 $params = [
                     'message' => $message,

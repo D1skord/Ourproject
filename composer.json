@@ -19,6 +19,7 @@
         "doctrine/orm": "^2.5",
         "guzzlehttp/guzzle": "^6.3",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jonnyw/php-phantomjs": "@dev",
         "monolog/monolog": "^1.22",
         "php-ffmpeg/php-ffmpeg": "^0.14.0",
         "sensio/distribution-bundle": "^5.0.19",
