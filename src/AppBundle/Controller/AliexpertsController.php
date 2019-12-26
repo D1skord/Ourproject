@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 use Couchbase\Document;
 use GuzzleHttp\Client;
+use JonnyW\PhantomJs\Client as PhantomJS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,38 @@ class AliexpertsController extends Controller
     public function epnAction(Request $request)
     {
 
+        $client = PhantomJS::getInstance();
+
+       // $client->getEngine()->setPath($this->getParameter('bin_directory') . '/phantomjs.exe');
+        $client->phantomJS = $this->getParameter('bin_directory') . '/phantomjs.exe';
+
+
+
+//        $client->getEngine()->setPath($this->getParameter('bin_directory') . '/phantomjs.exe');
+
+        //$client->setBinDir('absolute_path/bin');
+        //$client->setPhantomJs('phantomjs.exe');
+
+        /**
+         * @see JonnyW\PhantomJs\Http\Request
+         **/
+        $request = $client->getMessageFactory()->createRequest('GET', 'https://ru.aliexpress.com/item/33037922702.html');
+
+        /**
+         * @see JonnyW\PhantomJs\Http\Response
+         **/
+        $response = $client->getMessageFactory()->createResponse();
+
+
+
+        // Send the request
+
+        $client->send($request, $response);
+        if($response->getStatus() === 200) {
+
+            // Dump the requested page content
+            echo $response->getContent();
+        }
 
 
         // replace this example code with whatever you need
@@ -101,24 +134,27 @@ class AliexpertsController extends Controller
 
 
             /* Get video */
-            $productUrlMob = str_replace('//ru', '//m.ru', $request->request->get('url'));
+            //$productUrlMob = str_replace('//ru', '//m.ru', $request->request->get('url'));
 
 
-            $client = new Client();
-            $res = $client->request('GET', $productUrlMob, [
-                'headers' => [
-                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
-                ]
-            ]);
-
-            $productHtmlMob = $res->getBody()->getContents();
+//            $client = new Client();
+//            $res = $client->request('GET', $productUrlMob, []);
+//
+//            $productHtmlMob = $res->getBody()->getContents();
 
 
-            preg_match('/(<source src=")+(\S*mp4)/', $productHtmlMob, $res);
 
+            $_client = PhantomJS::getInstance();
+            $_client->getEngine()->addOption('--load-images=true');
+            $_client->getEngine()->setPath($this->getParameter('bin_directory') . '/phantomjs.exe');
+            $_request = $_client->getMessageFactory()->createRequest( $request->request->get('url'), 'GET');
+            $_response = $_client->getMessageFactory()->createResponse();
+            $_client->send($_request, $_response);
+
+            preg_match('/(src=")+(\S*mp4)/', $_response->getContent(), $res);
 
             $productUrlVideo = (!empty($res[2])) ? $res[2] : false;
-            $gifPatch = '';
+
             if (!empty($productUrlVideo)) {
 
 
@@ -146,7 +182,7 @@ class AliexpertsController extends Controller
                 $video = $ffmpeg->open($videoPath);
                 $gifPatch = str_replace('.mp4', '.gif', $videoPath);
                 $video
-                    ->gif(\FFMpeg\Coordinate\TimeCode::fromSeconds(1), new \FFMpeg\Coordinate\Dimension(480, 360), 15)
+                    ->gif(\FFMpeg\Coordinate\TimeCode::fromSeconds(5), new \FFMpeg\Coordinate\Dimension(480, 360), 25)
                     ->save($gifPatch);
             }
             /* /Get video */
@@ -255,7 +291,8 @@ class AliexpertsController extends Controller
             $message .= $productHashtag . ' - похожие товары.';
 
 
-            $attachments = (!empty($gifPatch)) ? $vk->upload_doc_well(185235787, $gifPatch) : implode(',',$vk->upload_photo(185235787, $imagesPaths));
+            //$attachments = (!empty($gifPatch)) ? $vk->upload_doc_well(185235787, $gifPatch) : implode(',',$vk->upload_photo(185235787, $imagesPaths));
+            $attachments = (!empty($gifPatch)) ? $vk->upload_doc($gifPatch) : implode(',',$vk->upload_photo(185235787, $imagesPaths));
 
     
             try {

@@ -274,7 +274,7 @@ class vk{
      * @param $file
      * @return bool|string
      */
-    public function upload_doc($gid = false, $file){
+    public function upload_doc($file, $gid = false){
 
         if(!is_string($file)) return false;
         if(!function_exists('curl_init')) return false;
@@ -310,7 +310,7 @@ class vk{
 
             foreach($response as $photo){
 
-                $attachment = 'doc'.$photo['owner_id'].'_'.$photo['did'];
+                $attachment = 'doc'.$photo['owner_id'].'_'.$photo['id'];
             }
         }
 
