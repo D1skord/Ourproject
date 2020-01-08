@@ -52,7 +52,7 @@ class VkService
             'v' => '5.62' // не обязательно
         ]);
 
-        $aliexpress = new AliexpressService($params['url'], $this->container);
+        $aliexpress = new AliexpressService($params['url'], $this->container, $params['html']);
 
         //$attachments = (!empty($gifPatch)) ? $vk->upload_doc_well(185235787, $gifPatch) : implode(',',$vk->upload_photo(185235787, $imagesPaths));
         $attachments = (!empty($gifPatch = $aliexpress->getGif())) ? $vk->upload_doc($gifPatch) : implode(',', $vk->upload_photo(185235787, $aliexpress->getImages()));

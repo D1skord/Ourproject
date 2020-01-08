@@ -105,6 +105,7 @@ class AliexpertsController extends Controller
                     'url' => $request->request->get('url'),
                     'postName' => $request->request->get('name'),
                     'productHashtag' => $request->request->get('hashtag'),
+                    'html' => $request->request->get('html'),
                 ]);
                 $this->addFlash('success', 'Пост добавлен!');
             } catch

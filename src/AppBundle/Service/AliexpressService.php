@@ -14,10 +14,11 @@ class AliexpressService
     private $container;
     private $html;
 
-    public function __construct($url, $container)
+    public function __construct($url, $container, $html = false)
     {
+
         $this->container = $container;
-        $this->html = $this->getHtmlByUrl($url);
+        $this->html = (empty($html)) ? $this->getHtmlByUrl($url) : $html;
     }
 
     private function getHtmlByUrl($url) {
